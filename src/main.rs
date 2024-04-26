@@ -13,8 +13,12 @@ pub extern "C" fn _start() -> ! {
 
     sros::init();
 
-    // invoke a breakpoint exception
-    x86_64::instructions::interrupts::int3();
+    #[allow(unconditional_recursion)]
+    fn stack_overflow() {
+        stack_overflow();
+    }
+
+    stack_overflow();
 
     // as before
     #[cfg(test)]
